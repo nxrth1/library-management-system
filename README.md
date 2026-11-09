@@ -27,7 +27,8 @@ stores the foreign key and the `genre` relation enables typed relational
 queries. Compared with a document database, related genre data is modeled and
 queried as a separate entity rather than duplicated inside each book document.
 
-## User Roles
-
-The `User` model assigns users a `Role` enum, with `PATRON` as the default and
-`LIBRARIAN` available for catalog staff.
+The `User` model stores both `email` and `password`, and assigns a `Role` enum
+with `PATRON` as the default and `LIBRARIAN` available for catalog staff. The
+`Genre` model also includes a unique `slug`, which provides a stable URL-safe
+identifier for each genre while still allowing the display name to remain human
+readable.
