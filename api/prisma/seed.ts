@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -83,6 +84,22 @@ async function main(): Promise<void> {
   }
 }
 
+
+  const passwordHash = await bcrypt.hash("Librarian123!", 10);
+
+  await prisma.user.upsert({
+    where: { email: "librarian@library.com" },
+    update: {
+      role: Role.LIBRARIAN,
+    },
+    create: {
+      email: "librarian@library.com",
+      name: "Head Librarian", // <-- Remove if your User model has no 'name' field
+      password: passwordHash, // <-- Change to 'passwordHash' if your User model uses 'passwordHash'
+      role: Role.LIBRARIAN,
+    },
+  });
+}
 main()
   .catch((error: unknown) => {
     console.error("Failed to seed the library catalog:", error);
