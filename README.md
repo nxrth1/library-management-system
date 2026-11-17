@@ -187,11 +187,11 @@ A small upsert pattern looks like this:
 
 ```ts
 await prisma.example.upsert({
-  where: { uniqueField: 'known-value' },
-  update: { role: 'AN_EXAMPLE_ROLE' },
+  where: { uniqueField: "known-value" },
+  update: { role: "AN_EXAMPLE_ROLE" },
   create: {
-    uniqueField: 'known-value',
-    role: 'AN_EXAMPLE_ROLE',
+    uniqueField: "known-value",
+    role: "AN_EXAMPLE_ROLE",
   },
 });
 ```
@@ -266,9 +266,9 @@ The current file extends PrismaClient. That gives the service access to fields
 such as:
 
 ```ts
-this.prisma.user
-this.prisma.genre
-this.prisma.book
+this.prisma.user;
+this.prisma.genre;
+this.prisma.book;
 ```
 
 Each name must match a model in `schema.prisma`.
@@ -382,7 +382,7 @@ A controller owns the HTTP method and URL.
 Small teaching pattern:
 
 ```ts
-@Controller('examples')
+@Controller("examples")
 export class ExamplesController {
   constructor(private readonly examplesService: ExamplesService) {}
 
@@ -445,13 +445,13 @@ For your Genre service, adapt this pattern to `prisma.genre`.
 
 Implement and understand these behaviors:
 
-| HTTP behavior | Service method | Prisma idea |
-| --- | --- | --- |
-| Read all genres | `findAll` | `findMany()` |
-| Read one genre | `findOne` | `findUnique()` |
-| Create genre | `create` | `create()` |
-| Update genre | `update` | `update()` |
-| Delete genre | `remove` | `delete()` |
+| HTTP behavior   | Service method | Prisma idea    |
+| --------------- | -------------- | -------------- |
+| Read all genres | `findAll`      | `findMany()`   |
+| Read one genre  | `findOne`      | `findUnique()` |
+| Create genre    | `create`       | `create()`     |
+| Update genre    | `update`       | `update()`     |
+| Delete genre    | `remove`       | `delete()`     |
 
 Before returning a missing row, check whether it exists. A useful Nest exception
 is `NotFoundException`.
@@ -464,7 +464,7 @@ const item = await this.prisma.example.findUnique({
 });
 
 if (!item) {
-  throw new NotFoundException('Example not found');
+  throw new NotFoundException("Example not found");
 }
 
 return item;
@@ -489,13 +489,13 @@ Then import `GenresModule` in [api/src/app.module.ts](api/src/app.module.ts).
 
 ### Genre Routes
 
-| Method | Route | Intended access |
-| --- | --- | --- |
-| GET | `/genres` | Public |
-| GET | `/genres/:id` | Public |
-| POST | `/genres` | Librarian |
-| PATCH | `/genres/:id` | Librarian |
-| DELETE | `/genres/:id` | Librarian |
+| Method | Route         | Intended access |
+| ------ | ------------- | --------------- |
+| GET    | `/genres`     | Public          |
+| GET    | `/genres/:id` | Public          |
+| POST   | `/genres`     | Librarian       |
+| PATCH  | `/genres/:id` | Librarian       |
+| DELETE | `/genres/:id` | Librarian       |
 
 Do not protect routes until the authentication stage is working.
 
@@ -525,13 +525,13 @@ file is missing an import when Nest decorators or Prisma types are not defined.
 
 Controller methods you need:
 
-| Method | Route | Input |
-| --- | --- | --- |
-| `findAll` | `GET /books` | Query values |
-| `findOne` | `GET /books/:id` | URL ID |
-| `create` | `POST /books` | Validated body |
-| `update` | `PATCH /books/:id` | URL ID plus validated body |
-| `remove` | `DELETE /books/:id` | URL ID |
+| Method    | Route               | Input                      |
+| --------- | ------------------- | -------------------------- |
+| `findAll` | `GET /books`        | Query values               |
+| `findOne` | `GET /books/:id`    | URL ID                     |
+| `create`  | `POST /books`       | Validated body             |
+| `update`  | `PATCH /books/:id`  | URL ID plus validated body |
+| `remove`  | `DELETE /books/:id` | URL ID                     |
 
 Query parameter pattern:
 
@@ -569,8 +569,8 @@ Understand this shape before editing:
 this.prisma.example.findMany({
   where: {
     name: {
-      contains: 'searched text',
-      mode: 'insensitive',
+      contains: "searched text",
+      mode: "insensitive",
     },
   },
   skip: 0,
@@ -740,9 +740,7 @@ Small injection pattern:
 ```ts
 @Injectable()
 export class ExampleAuthService {
-  constructor(
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly jwtService: JwtService) {}
 
   createToken(payload: object) {
     return this.jwtService.sign(payload);
@@ -829,8 +827,7 @@ Open [api/src/auth/roles.decorator.ts](api/src/auth/roles.decorator.ts).
 A decorator attaches metadata to a route:
 
 ```ts
-export const Roles = (...roles: Role[]) =>
-  SetMetadata('roles', roles);
+export const Roles = (...roles: Role[]) => SetMetadata("roles", roles);
 ```
 
 At a route:
@@ -905,21 +902,21 @@ response shaping. Authorization and authentication are handled separately.
 
 # 10. Required Route Map
 
-| Method | Route | Guard |
-| --- | --- | --- |
-| POST | `/auth/register` | None |
-| POST | `/auth/login` | None |
-| GET | `/auth/profile` | JWT |
-| GET | `/genres` | None |
-| GET | `/genres/:id` | None |
-| POST | `/genres` | JWT + librarian role |
-| PATCH | `/genres/:id` | JWT + librarian role |
-| DELETE | `/genres/:id` | JWT + librarian role |
-| GET | `/books` | None |
-| GET | `/books/:id` | None |
-| POST | `/books` | JWT + librarian role |
-| PATCH | `/books/:id` | JWT + librarian role |
-| DELETE | `/books/:id` | JWT + librarian role |
+| Method | Route            | Guard                |
+| ------ | ---------------- | -------------------- |
+| POST   | `/auth/register` | None                 |
+| POST   | `/auth/login`    | None                 |
+| GET    | `/auth/profile`  | JWT                  |
+| GET    | `/genres`        | None                 |
+| GET    | `/genres/:id`    | None                 |
+| POST   | `/genres`        | JWT + librarian role |
+| PATCH  | `/genres/:id`    | JWT + librarian role |
+| DELETE | `/genres/:id`    | JWT + librarian role |
+| GET    | `/books`         | None                 |
+| GET    | `/books/:id`     | None                 |
+| POST   | `/books`         | JWT + librarian role |
+| PATCH  | `/books/:id`     | JWT + librarian role |
+| DELETE | `/books/:id`     | JWT + librarian role |
 
 Choose `/users/profile` or `/auth/profile`, but keep the route documented and
 use it consistently.
