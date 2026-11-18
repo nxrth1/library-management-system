@@ -48,10 +48,10 @@ const catalog = [
     name: "Engineering",
     slug: "engineering",
     books: [
-      [],
-      [],
-      [],
-      [],
+      ["The Design of Everyday Things", "Don Norman", "9780465050659", "A foundational guide on human-centered design and how usability shapes engineered products.", "https://example.com", 3, 3],
+      ["Structures: Or Why Things Don't Fall Down", "J.E. Gordon", "9780306812835", "An accessible explanation of structural engineering principles behind bridges, buildings, and materials.", "https://example.com", 2, 2],
+      ["Designing Data-Intensive Applications", "Martin Kleppmann", "9781449373320", "A comprehensive look at the architecture, reliability, and scalability of modern software systems.", "https://example.com", 3, 2],
+      ["To Engineer Is Human", "Henry Petroski", "9780679734161", "An exploration of how engineering failures drive innovation and improve structural safety.", "https://example.com", 2, 2],
     ],
   },
 ] as const;
